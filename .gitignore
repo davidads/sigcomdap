@@ -17,3 +17,11 @@ bin-release/
 # Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
 # should NOT be excluded as they contain compiler settings and other important
 # information for Eclipse / Flash Builder.
+/Sigcomdap-ejb/build/
+/Sigcomdap-ejb/dist/
+/Sigcomdap-ejb/nbproject/private/
+/Sigcomdap-war/build/
+/Sigcomdap-war/dist/
+/Sigcomdap-war/nbproject/private/
+/dist/
+/build/

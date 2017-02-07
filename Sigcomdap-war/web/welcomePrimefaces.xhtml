@@ -1,0 +1,199 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>SIGCOMDAP</title>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+
+            <p:layout fullPage="true">
+
+                <!--     <p:layoutUnit position="north" size="100" resizable="true" closable="true" collapsible="true">
+                    Header
+                </p:layoutUnit>
+
+               <p:layoutUnit position="south" size="100" closable="true" collapsible="true">
+                      Footer
+                  </p:layoutUnit>-->
+
+                <p:layoutUnit position="west" size="175" header="SIGCOMDAP" collapsible="true">
+                    <p:menu>
+                        <p:submenu label="Menú">
+                            <p:menuitem value="Catastro" url="http://www.primefaces.org/showcase-labs/ui/home.jsf" />
+                            <p:menuitem value="Usuarios" url="http://www.primefaces.org/documentation.html" />
+                            <p:menuitem value="Caja" url="http://forum.primefaces.org/" />
+                            <p:menuitem value="Seguridad" url="http://www.primefaces.org/themes.html" />
+                        </p:submenu>
+
+                    </p:menu>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center">
+                    <h3 style="margin-top:0">Mantenimiento de personas</h3>
+
+
+                    <h:form id="principal">
+                        <p:tabView id="tabs"  activeIndex="#{mttoPersonas.tabindex}">
+                            <p:tab title="Búsqueda">
+                                <h:panelGrid>
+
+
+                                    <!--<p:growl id="messages"/>-->
+
+
+                                    <p:menubar>
+                                        <p:menuitem value="Buscar" actionListener="#{mttoPersonas.buscar()}" icon="ui-icon-search" update="lista"  />
+                                        <p:menuitem value="Limpiar" action="#{mttoPersonas.limpiarBusqueda()}" update="lista" icon="ui-icon-refresh" />
+                                    </p:menubar>
+                                    <p:panelGrid columns="4" >
+                                        <p:outputLabel for="txtNombre1" value="Primer Nombre" />
+                                        <p:inputText id="txtNombre1" value="#{mttoPersonas.nombre1B}"/>
+                                        <p:outputLabel for="txtNombre2" value="Segundo Nombre" />
+                                        <p:inputText id="txtNombre2" value="#{mttoPersonas.nombre2B}"/>
+                                        <p:outputLabel for="txtApellido1" value="Primer Apellido" />
+                                        <p:inputText id="txtApellido1" value="#{mttoPersonas.apellido1B}" />
+                                        <p:outputLabel for="txtApellido1" value="Segundo Apellido" />
+                                        <p:inputText id="txtApellido2" value="#{mttoPersonas.apellido2B}" />
+                                    </p:panelGrid>
+
+                                    <p:dataTable id="lista" var = "per" value="#{mttoPersonas.lstPersonas}"
+                                                 selectionMode="single"
+                                                 selection="#{mttoPersonas.persona}"
+                                                 rowKey="#{per.codper}">
+                                        <p:ajax event="rowSelect" listener="#{mttoPersonas.onRowSelect(event)}"
+                                                update="@all" />
+
+                                        <p:column headerText="Primer Nombre">
+                                            <h:outputText value="#{per.nombre1}" />
+                                        </p:column>
+                                        <p:column headerText="Segundo Nombre">
+                                            <h:outputText value="#{per.nombre2}" />
+                                        </p:column>
+                                        <p:column headerText="Primer Apellido">
+                                            <h:outputText value="#{per.apellido1}" />
+                                        </p:column>
+                                        <p:column headerText="Segundo Apellido">
+                                            <h:outputText value="#{per.apellido2}" />
+                                        </p:column>
+
+                                    </p:dataTable>
+
+                                </h:panelGrid>
+                            </p:tab>
+                            <p:tab title="Detalle">
+
+
+                                <p:menubar>
+                                    <p:menuitem value="Nuevo" action="#{mttoPersonas.nuevaPersona()}" update="lista" icon="ui-icon-search" />
+                                    <p:menuitem value="Guardar" action="#{mttoPersonas.guardarPersona()}" update="lista" icon="ui-icon-refresh" />
+                                </p:menubar>
+
+
+
+                                <p:panelGrid columns="4" >
+                                    <p:outputLabel for="txtNombre1P" value="Primer Nombre" />
+                                    <p:inputText id="txtNombre1P" value="#{mttoPersonas.nombre1P}"/>
+                                    <p:outputLabel for="txtNombre2" value="Segundo Nombre" />
+                                    <p:inputText id="txtNombre2P" value="#{mttoPersonas.nombre2P}"/>
+                                    <p:outputLabel for="txtApellido1P" value="Primer Apellido" />
+                                    <p:inputText id="txtApellido1P" value="#{mttoPersonas.apellido1P}" />
+                                    <p:outputLabel for="txtApellido1P" value="Segundo Apellido" />
+                                    <p:inputText id="txtApellido2P" value="#{mttoPersonas.apellido2P}" />
+                                    <p:outputLabel for="fNac" value="Fecha de Nacimiento:" />
+                                    <p:calendar id="fNac" value="#{mttoPersonas.fechaNacP}"  pattern="dd-MM-yyyy" mask="true"/>
+                                    <p:outputLabel for="txtDui" value="Dui" />
+                                    <p:inputMask id="txtDui" mask="99999999-9"/>
+                                    <p:outputLabel for="txtCodigoP" value="Codigo Persona" />
+                                    <p:inputText id="txtCodigoP" value="#{mttoPersonas.codperNew}" />
+                                    <p:outputLabel for="selectOneCBSexo" value="Sexo:" />
+                                    <h:selectOneMenu id="selectOneCBSexo" value="#{mttoPersonas.sexo}">
+                                        <f:selectItem itemValue="" itemLabel="Seleccione.."/>
+                                        <f:selectItem itemValue="M" itemLabel="Masculino"/>
+                                        <f:selectItem itemValue="F" itemLabel="Femenino" />
+                                    </h:selectOneMenu>
+                                    <p:outputLabel for="selectOneCBTipoP" value="Tipo:" />
+                                    <h:selectOneMenu id="selectOneCBTipoP" value="#{mttoPersonas.tipoPer}">
+                                        <f:selectItem itemValue="" itemLabel="Seleccione.."/>
+                                        <f:selectItem itemValue="N" itemLabel="Natural"/>
+                                        <f:selectItem itemValue="J" itemLabel="Jurídica" />
+                                    </h:selectOneMenu>
+                                </p:panelGrid>
+
+                                <p:panel id="basic" header="Teléfonos" footer="Algún footer.." style="margin-bottom:20px">
+                                    <h:panelGrid columns="5" cellpadding="10" width="50%">
+
+                                        <p:outputLabel for="noTel" value="Número" />
+                                        <p:inputMask id="noTel" mask="9999-9999" value="#{mttoPersonas.numeroTel}"/>
+                                        <p:outputLabel for="selectOneCB" value="Tipo:" />
+                                        <h:selectOneMenu id="selectOneCB" value="#{mttoPersonas.tipoTel}">
+                                            <f:selectItem itemValue="0" itemLabel="Seleccione.."/>
+                                            <f:selectItems value="#{mttoPersonas.tipotelLst}"/>
+                                        </h:selectOneMenu>
+                                        <p:commandButton value="Agregar" actionListener="#{mttoPersonas.agregarTelefono()}" update="listaTel" />
+                                    </h:panelGrid>
+                                    <h:panelGrid columns="5" cellpadding="10" width="50%">
+                                        <p:dataTable id="listaTel" var = "tel" value="#{mttoPersonas.personaTelList}">
+                                            <p:column headerText="Telefono">
+                                                <h:outputText value="#{tel.tipoTel.descripcion}" />
+                                            </p:column>
+                                            <p:column headerText="Número">
+                                                <h:outputText value="#{tel.numero}" />
+                                            </p:column>
+                                        </p:dataTable>                                     
+                                    </h:panelGrid>
+                                </p:panel>
+
+                                <p:panel id="basic2" header="Direcciones" footer="Otro footer.." style="margin-bottom:20px">
+                                    <h:panelGrid columns="5" cellpadding="10" width="50%">
+                                        <p:outputLabel for="direccion" value="Dirección" />
+                                        <p:inputText id="direccion" value="#{mttoPersonas.nuevaDirecc}" size="70"/>
+
+                                        <p:outputLabel for="txtNuevaDirecc" value="Tipo:" />
+                                        <h:selectOneMenu id="txtNuevaDirecc" value="#{mttoPersonas.tipoDir}">
+                                            <f:selectItem itemValue="0" itemLabel="Seleccione.."/>
+                                            <f:selectItems value="#{mttoPersonas.tipoDireccLst}"/>
+                                        </h:selectOneMenu>
+                                        <p:commandButton value="Agregar" actionListener="#{mttoPersonas.agregarDireccion()}" update="listaDir" />
+                                    </h:panelGrid>
+                                    <h:panelGrid columns="5" cellpadding="10">
+                                        <p:dataTable id="listaDir" var = "dir" value="#{mttoPersonas.personaDireccList}">                             
+                                            <p:column headerText="Tipo">
+                                                <h:outputText value="#{dir.tipoDirecc.descripcion}" />
+                                            </p:column>
+                                            <p:column headerText="Direccion">
+                                                <h:outputText value="#{dir.direccion}" />
+                                            </p:column>
+                                        </p:dataTable>                                     
+                                    </h:panelGrid>
+                                </p:panel>
+                            </p:tab>
+
+                        </p:tabView>
+
+                    </h:form>
+
+
+
+
+
+
+
+
+                </p:layoutUnit>
+
+            </p:layout>
+
+        </h:body>
+
+    </f:view>
+</html>
+
